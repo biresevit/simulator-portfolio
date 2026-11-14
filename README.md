@@ -1,5 +1,7 @@
 # simulator | Poker simulation and strategy libraries
 
+> **Permitted use:** These bots may only be used for research, poker practice in the [simulator](https://github.com/biresevit/simulator-portfolio), poker practice through a real poker-site client, or authorized load testing to assess a poker site's stability under high traffic. Running bots at real-money tables without disclosing their use to all human players is prohibited.
+
 > Public portfolio snapshot with a fresh history. Deployment credentials are removed; configuration placeholders require your own services. Binary dependencies and generated PDF guides are omitted.
 
 A Windows poker simulator and shared .NET libraries for strategy decisions, hand-history parsing, player statistics, and regression analysis. The desktop simulator calls PDecision over REST or uses the decision library in process.
