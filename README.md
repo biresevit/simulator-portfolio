@@ -1,10 +1,10 @@
-# simulator | Poker simulation and strategy libraries
+# simulator | Poker table simulator
 
 > **Permitted use:** These bots may only be used for research, poker practice in the [simulator](https://github.com/biresevit/simulator-portfolio), poker practice through a real poker-site client, or authorized load testing to assess a poker site's stability under high traffic. Running bots at real-money tables without disclosing their use to all human players is prohibited.
 
 > Public portfolio snapshot with a fresh history. Deployment credentials are removed; configuration placeholders require your own services. Binary dependencies and generated PDF guides are omitted.
 
-A Windows poker simulator and shared .NET libraries for strategy decisions, hand-history parsing, player statistics, and regression analysis. The desktop simulator calls PDecision over REST or uses the decision library in process.
+A Windows desktop poker table simulator. It deals the hands, runs the betting, and asks PDecision over REST for the bots' decisions (it can also call the decision library in process). The strategy, hand-history, and statistics libraries it works with are kept in a private repository and are not part of this snapshot.
 
 ![The simulator table: six bot seats on a 7-6-4 flop, one bot betting](images/simulator.png)
 
@@ -19,30 +19,26 @@ The simulator (left) plays a six-handed table of bots. Each time a bot is to act
 ## Engineering highlights
 
 - A WPF table simulator for inspecting game state and exercising automated decisions.
-- Shared strategy and evaluation libraries used by the PDecision service.
-- Hand-history parsing and generation across multiple formats, with database-backed player statistics.
-- Replay and regression workflows comparing simulated actions with recorded histories.
+- A REST client that sends table snapshots to the PDecision service and plays the decisions it returns.
+- Human and bot seats, pause/resume, and fast execution for long unattended runs.
+- Regression workflows comparing simulated actions with the hand histories PDecision records.
 
-**Technology:** C#, VB.NET, .NET 8, WPF, SQL Server/LocalDB, NuGet.
+**Technology:** C#, .NET 8, WPF, REST/JSON, NUnit.
 
 ## Repository map
 
 | Directory | Responsibility |
 | --- | --- |
-| `PokerTable/` | Desktop simulator and REST integration |
-| `DecisionMaking/` | Strategy, resources, table state, and statistics |
-| `HandHistoryLib/` | Hand-history models and processing |
-| `DBLib/` | VB.NET database and history-parsing components |
-| `PokerUtil/` | Shared poker utilities |
-| `QueryDBLib/` | Database query helpers |
-| `RulesLib/` | Strategy rules |
+| `PokerTable/PokerTable/` | Desktop simulator and REST integration |
+| `PokerTable/PokerTableNUnitTests/` | Unit tests |
+| `images/` | Screenshot and demo video |
+
+The strategy and data libraries (`DecisionMaking`, `HandHistoryLib`, `DBLib`, `PokerUtil`, `QueryDBLib`, `RulesLib`) are private. `PokerTable.csproj` and `PokerTable.sln` still reference `DecisionMaking` at its original relative path.
 
 ## Platform context
 
 ```text
-PokerTable -- REST --> PDecision --> DecisionMaking
-     |                                   |
-     +------ in-process decisions -------+
+PokerTable -- REST --> PDecision --> DecisionMaking (private)
 ```
 
 [PokerBackoffice](https://github.com/biresevit/PokerBackoffice) | [ScheduleController](https://github.com/biresevit/ScheduleController) | [PokerController](https://github.com/biresevit/PokerController) | [PDecision](https://github.com/biresevit/PDecision-portfolio) | [simulator](https://github.com/biresevit/simulator-portfolio)
@@ -51,17 +47,17 @@ The web operations interface lives in PokerBackoffice.
 
 ## Building
 
-Use Windows and the .NET 8 SDK. PokerTable targets `net8.0-windows` and uses WPF. Some packages and project references require the existing development feeds, local package cache, or sibling shared projects. Strategy resources and runtime infrastructure are not bundled.
+This snapshot is published for code review and does not build on its own: PokerTable references the private `DecisionMaking` project and legacy WPF toolkit DLLs that are not included. In the original environment it builds on Windows with the .NET 8 SDK (`net8.0-windows`, WPF):
 
 ```powershell
 dotnet build PokerTable/PokerTable/PokerTable.csproj -c Release
 ```
 
-Inspect project references and NuGet sources before restoring. Runtime paths require configured strategy resources, SQL/LocalDB, and external solvers for applicable strategies. This repository is not a turnkey offline application.
+Running it also requires a PDecision service with its strategy resources, SQL/LocalDB, and external solvers.
 
 ## Simulation and validation
 
-For REST integration, check out PDecision beside this repository and follow its simulator instructions. Start PDecision and wait for its health endpoint to report ready. PokerTable supports bot seats, pause/resume, fast execution, and switching between REST and in-process decisions.
+For REST integration, check out PDecision beside this repository and follow its simulator instructions. Start PDecision and wait for its health endpoint to report ready. PokerTable supports human and bot seats, pause/resume, fast execution, and switching between REST and in-process decisions.
 
 PDecision's `tests/check_simulator_hh.py` compares recorded hand histories with the simulator's expected action trace. These integration checks require configured runtime resources.
 
@@ -71,4 +67,4 @@ Supply deployment credentials through local environment or secret configuration.
 
 ## Portfolio validation
 
-Source scanning passed and DecisionMaking built successfully in the existing development environment. PokerTable cannot build without the omitted legacy WPF toolkit DLLs, including System.Windows.Controls.DataVisualization.Toolkit. Private packages and runtime resources are not bundled.
+Source scanning passed. PokerTable cannot build from this snapshot without the private `DecisionMaking` project and the omitted legacy WPF toolkit DLLs, including System.Windows.Controls.DataVisualization.Toolkit. Private packages and runtime resources are not bundled.

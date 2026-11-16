@@ -1,6 +1,6 @@
 # About this source snapshot
 
-This repository presents the implementation with a new Git history. It excludes deployment secrets, generated PDF documents, compiled DLLs, and local database files. Some legacy helpers retain configuration placeholders and are included for code review rather than immediate deployment.
+This repository presents the implementation with a new Git history. It excludes the private strategy and data libraries (DecisionMaking, HandHistoryLib, DBLib, PokerUtil, QueryDBLib, RulesLib), deployment secrets, generated PDF documents, compiled DLLs, and local database files. Some legacy helpers retain configuration placeholders and are included for code review rather than immediate deployment.
 
 Builds require the development dependencies described in README.md. This snapshot does not grant access to private package feeds, strategy resources, solver services, or hosted infrastructure.
 
