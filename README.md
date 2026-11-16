@@ -6,6 +6,16 @@
 
 A Windows poker simulator and shared .NET libraries for strategy decisions, hand-history parsing, player statistics, and regression analysis. The desktop simulator calls PDecision over REST or uses the decision library in process.
 
+![The simulator table: six bot seats on a 7-6-4 flop, one bot betting](images/simulator.png)
+
+## Demo
+
+The simulator (left) plays a six-handed table of bots. Each time a bot is to act, the simulator sends the table state to [PDecision](https://github.com/biresevit/PDecision-portfolio) over REST; the PDecision window (right) logs every decision it returns, and the simulator plays it at the table.
+
+![Simulator playing hands while the PDecision window logs each decision it returns](images/simulator_demo.gif)
+
+[Full-resolution video (MP4, 38 s)](images/simulator_demo.mp4)
+
 ## Engineering highlights
 
 - A WPF table simulator for inspecting game state and exercising automated decisions.
@@ -37,7 +47,7 @@ PokerTable -- REST --> PDecision --> DecisionMaking
 
 [PokerBackoffice](https://github.com/biresevit/PokerBackoffice) | [ScheduleController](https://github.com/biresevit/ScheduleController) | [PokerController](https://github.com/biresevit/PokerController) | [PDecision](https://github.com/biresevit/PDecision-portfolio) | [simulator](https://github.com/biresevit/simulator-portfolio)
 
-The web operations interface lives in PokerBackoffice. Its screenshots show the companion application rather than this desktop simulator.
+The web operations interface lives in PokerBackoffice.
 
 ## Building
 
