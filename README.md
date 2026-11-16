@@ -1,5 +1,7 @@
 # simulator | Poker table simulator
 
+**Part of the PokerFill platform** · five repositories, one per component · [project overview](https://github.com/biresevit#pokerfill)
+
 > **Permitted use:** These bots may only be used for research, poker practice in the [simulator](https://github.com/biresevit/simulator-portfolio), poker practice through a real poker-site client, or authorized load testing to assess a poker site's stability under high traffic. Running bots at real-money tables without disclosing their use to all human players is prohibited.
 
 > Public portfolio snapshot with a fresh history. Deployment credentials are removed; configuration placeholders require your own services. Binary dependencies and generated PDF guides are omitted.
